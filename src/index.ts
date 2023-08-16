@@ -1,8 +1,8 @@
 import express from 'express';
+import db from './db/index';
 
 const app = express();
 const PORT = 3000;
-
-app.listen(PORT, () => {
-  console.log(`Aplicacion escuchando en el puerto ${PORT}`);
+db.sync({ force: true }).then(() => {
+  app.listen(PORT, () => console.log(`%s listening at ${PORT}`));
 });

@@ -7,8 +7,8 @@ import {
   IsUUID,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'user' })
-export class User extends Model {
+@Table({ tableName: 'service' })
+export class Service extends Model {
   @IsUUID(4)
   @PrimaryKey
   @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, primaryKey: true })
@@ -17,18 +17,6 @@ export class User extends Model {
   @Column({ type: DataType.STRING, allowNull: false })
   name!: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
-  email!: string;
-
-  @Column({ type: DataType.STRING, allowNull: false })
-  password!: string;
-
-  @Column({ type: DataType.STRING, allowNull: false })
-  city!: string;
-
   @Column({ type: DataType.BOOLEAN, allowNull: false })
   isActive!: boolean;
-
-  @Column({ type: DataType.BOOLEAN, allowNull: false })
-  isDelete!: boolean;
 }
