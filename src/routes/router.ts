@@ -1,15 +1,17 @@
 import express from 'express';
 import {
-  getMembership,
-  createMembershipController,
+  getAllMembership,
+  getIdMembership,
+  createMembership,
   updateMembershipController,
   deleteMembershipController,
 } from '../modules/membership/membership.controller';
 
 const router = express.Router();
 
-router.get('/membership', getMembership);
-router.post('/membership', createMembershipController);
+router.get('/membership', getAllMembership);
+router.get('/membership/:id', getIdMembership);
+router.post('/membership', createMembership);
 router.put('/membership/:id', updateMembershipController);
 router.delete('/membership/:id', deleteMembershipController);
 

@@ -1,17 +1,30 @@
 import { Membership } from '../../models/membership.model';
 
 // Obtener todas las membresías
-export const getMembershipData = async () => {
+export const getAllMembershipService = async () => {
   try {
     const memberships = await Membership.findAll();
+    if (memberships.length === 0) throw new Error('No hay membresias');
     return memberships;
-  } catch (error) {
-    throw new Error('Error getting membership data');
+  } catch (error: any) {
+    const messageError = error.message || 'Error en el servicio';
+    throw new Error(messageError);
+  }
+};
+
+export const getIdMembershipService = async (id: string) => {
+  try {
+    const memberships = await Membership.findByPk(id);
+    if (!memberships) throw new Error(`No se encontro la membresia por el id ${id}`);
+    return memberships;
+  } catch (error: any) {
+    const messageError = error.message || 'Error en el servicio';
+    throw new Error(messageError);
   }
 };
 
 // Crear una nueva membresía
-export const createMembership = async (data: Partial<Membership>) => {
+export const createMembershipService = async (data: Partial<Membership>) => {
   try {
     const newMembership = await Membership.create(data);
     return newMembership;
@@ -48,5 +61,3 @@ export const deleteMembership = async (id: string) => {
     throw new Error('Error deleting membership');
   }
 };
-
-  

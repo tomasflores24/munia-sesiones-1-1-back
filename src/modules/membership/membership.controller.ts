@@ -1,30 +1,49 @@
-import { Request, Response } from 'express';
+import { RequestHandler } from 'express';
+import { MembershipDTO } from './dto/create-membership';
+import { validationDataMembership } from './utils';
 import {
-  getMembershipData,
-  createMembership,
+  getAllMembershipService,
+  createMembershipService,
   updateMembership,
   deleteMembership,
+  getIdMembershipService,
 } from './membership.service';
 
-export const getMembership = async (_req: Request, res: Response) => {
+export const getAllMembership: RequestHandler = async (_req, res) => {
   try {
-    const membershipData = await getMembershipData();
-    return res.status(200).json(membershipData);
+    const allMemberships = await getAllMembershipService();
+    return res.status(200).json({ allMemberships });
   } catch (error) {
-    return res.status(500).json({ error: 'Error fetching membership data' });
+    return res.status(500).json({ error: (error as Error).message });
   }
 };
 
-export const createMembershipController = async (req: Request, res: Response) => {
+export const getIdMembership: RequestHandler = async (req, res) => {
   try {
-    const newMembership = await createMembership(req.body);
-    return res.status(201).json(newMembership);
+    const id = req.params.id;
+    const membership = await getIdMembershipService(id);
+    return res.status(200).json({ membership });
   } catch (error) {
-    return res.status(500).json({ error: 'Error creating membership' });
+    return res.status(500).json({ error: (error as Error).message });
+  }
+};
+export const createMembership: RequestHandler = async (req, res) => {
+  try {
+    const { name, isActive, isDelete, amount }: MembershipDTO = req.body;
+    validationDataMembership({ name, isActive, isDelete, amount });
+    const newMembership = await createMembershipService({
+      name,
+      isActive,
+      isDelete,
+      amount,
+    });
+    return res.status(201).json({ newMembership });
+  } catch (error) {
+    return res.status(500).json({ error: (error as Error).message });
   }
 };
 
-export const updateMembershipController = async (req: Request, res: Response) => {
+export const updateMembershipController: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedMembership = await updateMembership(id, req.body);
@@ -34,7 +53,7 @@ export const updateMembershipController = async (req: Request, res: Response) =>
   }
 };
 
-export const deleteMembershipController = async (req: Request, res: Response) => {
+export const deleteMembershipController: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
     await deleteMembership(id);
@@ -43,5 +62,3 @@ export const deleteMembershipController = async (req: Request, res: Response) =>
     return res.status(500).json({ error: 'Error deleting membership' });
   }
 };
-
-
