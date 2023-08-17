@@ -1,9 +1,9 @@
 import express from 'express';
-import membershipRoutes from '../modules/membership/membership.route';
+import { getMembership } from '../modules/membership/membership.controller';
 
 const router = express.Router();
 
 //Membership
-router.use('/membership', membershipRoutes);
+router.get('/membership', getMembership);
 
 export default router;
