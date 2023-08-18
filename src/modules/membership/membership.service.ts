@@ -1,63 +1,64 @@
 import { Membership } from '../../models/membership.model';
+import { MembershipDTO } from './dto/create-membership';
 
-// Obtener todas las membresías
-export const getAllMembershipService = async () => {
-  try {
-    const memberships = await Membership.findAll();
-    if (memberships.length === 0) throw new Error('No hay membresias');
-    return memberships;
-  } catch (error: any) {
-    const messageError = error.message || 'Error en el servicio';
-    throw new Error(messageError);
-  }
+export const getAllMembershipsFromDB = async () => {
+  const memberships = await Membership.findAll();
+  if (memberships.length === 0) throw new Error('No membership found');
+  return memberships;
 };
 
-export const getIdMembershipService = async (id: string) => {
-  try {
-    const memberships = await Membership.findByPk(id);
-    if (!memberships) throw new Error(`No se encontro la membresia por el id ${id}`);
-    return memberships;
-  } catch (error: any) {
-    const messageError = error.message || 'Error en el servicio';
-    throw new Error(messageError);
-  }
+export const getMembershipByIdFromDB = async (id: string) => {
+  const memberships = await Membership.findByPk(id);
+  if (!memberships) throw new Error(`Membership not found for id :${id}`);
+  return memberships;
 };
 
-// Crear una nueva membresía
-export const createMembershipService = async (data: Partial<Membership>) => {
+export const createNewMembershipInDB = async (body: Partial<MembershipDTO>) => {
   try {
-    const newMembership = await Membership.create(data);
+    const newMembership = await Membership.create(body);
     return newMembership;
   } catch (error) {
-    throw new Error('Error creating membership');
+    handleError(error, 'Error creating membership');
   }
 };
 
-// Actualizar una membresía
-export const updateMembership = async (id: string, data: Partial<Membership>) => {
+export const updateMembershipByIdInDB = async (
+  id: string,
+  data: Partial<Membership>
+) => {
   try {
     const membershipToUpdate = await Membership.findByPk(id);
-    if (!membershipToUpdate) {
-      throw new Error('Membership not found');
-    }
-
+    if (!membershipToUpdate) throw new Error('Membership not found');
     const updatedMembership = await membershipToUpdate.update(data);
     return updatedMembership;
   } catch (error) {
-    throw new Error('Error updating membership');
+    handleError(error, 'Error updating membership');
   }
 };
 
-// Eliminar una membresía
-export const deleteMembership = async (id: string) => {
+export const cancelMembershipByIdInDB = async (id: string) => {
+  const IS_DELETE = true;
+  const UnsubscribeMembership = { isDelete: IS_DELETE };
+
   try {
     const membershipToDelete = await Membership.findByPk(id);
-    if (!membershipToDelete) {
-      throw new Error('Membership not found');
-    }
 
-    await membershipToDelete.destroy();
+    if (!membershipToDelete) throw new Error('Membership not found');
+
+    if (membershipToDelete.isDelete === IS_DELETE)
+      throw new Error('The membership was already canceled');
+
+    const updatedMembership = await membershipToDelete.update(UnsubscribeMembership);
+    return updatedMembership;
   } catch (error) {
-    throw new Error('Error deleting membership');
+    handleError(error, 'Error deleting membership');
   }
 };
+
+// handleCustomError
+function handleError(error: unknown, defaultMessage: string) {
+  if (error instanceof Error) {
+    throw new Error(error.message);
+  }
+  throw new Error(defaultMessage);
+}
