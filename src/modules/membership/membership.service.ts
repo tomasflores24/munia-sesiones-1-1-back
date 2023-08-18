@@ -1,5 +1,5 @@
 import { Membership } from '../../models/membership.model';
-import { MembershipDTO } from './dto/create-membership';
+import { CreateMembershipDTO } from './dto/create-membership';
 
 export const getAllMembershipsFromDB = async () => {
   const memberships = await Membership.findAll();
@@ -13,7 +13,7 @@ export const getMembershipByIdFromDB = async (id: string) => {
   return memberships;
 };
 
-export const createNewMembershipInDB = async (body: Partial<MembershipDTO>) => {
+export const createNewMembershipInDB = async (body: Partial<CreateMembershipDTO>) => {
   try {
     const newMembership = await Membership.create(body);
     return newMembership;

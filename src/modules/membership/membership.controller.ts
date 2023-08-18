@@ -1,7 +1,9 @@
-import { RequestHandler, Response } from 'express';
-import { MembershipDTO, MembershipIdDTO } from './dto/create-membership';
-// import { validateAndCreate } from '../../utils';
-import { ValidatorOptions, validate } from 'class-validator';
+import { RequestHandler } from 'express';
+import {
+  CreateMembershipDTO,
+  SearchIdMembershipDTO,
+  UpdateMembership,
+} from './dto/create-membership';
 
 import {
   cancelMembershipByIdInDB,
@@ -10,6 +12,8 @@ import {
   getMembershipByIdFromDB,
   updateMembershipByIdInDB,
 } from './membership.service';
+import { handleErrorResponse } from '../../common/errorResponse';
+import { validateAndCreate } from '../../common/validateInstance';
 
 export const getAllMembership: RequestHandler = async (_req, res) => {
   try {
@@ -22,7 +26,7 @@ export const getAllMembership: RequestHandler = async (_req, res) => {
 
 export const getIdMembership: RequestHandler = async (req, res) => {
   try {
-    const response = await validateAndCreate(req.params, MembershipIdDTO);
+    const response = await validateAndCreate(req.params, SearchIdMembershipDTO);
     const membership = await getMembershipByIdFromDB(response.id);
     return res.status(200).json({ membership });
   } catch (error) {
@@ -32,7 +36,7 @@ export const getIdMembership: RequestHandler = async (req, res) => {
 
 export const createMembership: RequestHandler = async (req, res) => {
   try {
-    const response = await validateAndCreate(req.body, MembershipDTO);
+    const response = await validateAndCreate(req.body, CreateMembershipDTO);
     const newMembership = await createNewMembershipInDB(response);
     return res.status(201).json({ newMembership });
   } catch (error) {
@@ -42,12 +46,18 @@ export const createMembership: RequestHandler = async (req, res) => {
 
 export const updateMembershipController: RequestHandler = async (req, res) => {
   try {
-    const responseUpdate = await validateAndCreate(req.body, MembershipDTO);
-    const responseId = await validateAndCreate(req.params, MembershipIdDTO);
-    const updatedMembership = await updateMembershipByIdInDB(
-      responseId.id,
-      responseUpdate
+    const data = { ...req.body, ...req.params };
+    const { id, amount, isActive, isDelete, name } = await validateAndCreate(
+      data,
+      UpdateMembership
     );
+
+    const updatedMembership = await updateMembershipByIdInDB(id, {
+      amount,
+      isActive,
+      isDelete,
+      name,
+    });
 
     return res.status(200).json({ updatedMembership });
   } catch (error) {
@@ -57,49 +67,10 @@ export const updateMembershipController: RequestHandler = async (req, res) => {
 
 export const deleteMembershipController: RequestHandler = async (req, res) => {
   try {
-    const responseId = await validateAndCreate(req.params, MembershipIdDTO);
+    const responseId = await validateAndCreate(req.params, SearchIdMembershipDTO);
     const deletedMemberShip = await cancelMembershipByIdInDB(responseId.id);
     return res.status(204).json({ deletedMemberShip });
   } catch (error) {
     handleErrorResponse(res, error);
   }
 };
-
-// handleErrorResponse
-const handleErrorResponse = (res: Response, error: unknown) => {
-  if (error instanceof Error) {
-    return res.status(500).json({ error: error.message });
-  } else {
-    return res.status(500).json({ error: 'An unknown error occurred.' });
-  }
-};
-
-const ValidatorOptions: ValidatorOptions = {
-  whitelist: true,
-  forbidNonWhitelisted: true,
-  validationError: {
-    target: false,
-    value: false,
-  },
-};
-
-export async function validateAndCreate<T>(
-  body: any,
-  ClassType: new () => T
-): Promise<T> {
-  const instance: any = new ClassType();
-  Object.assign(instance, body);
-  const arrayErrors = await validate(instance, ValidatorOptions);
-  if (arrayErrors.length === 0) return instance;
-
-  let keyError: string = '';
-  arrayErrors.forEach((e) => {
-    const obj = e.constraints;
-    for (const key in obj) {
-      keyError = obj[key];
-      break;
-    }
-  });
-
-  throw new Error(keyError || 'Datos invalidos');
-}
