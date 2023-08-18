@@ -5,14 +5,16 @@ import {
   createMembership,
   updateMembershipController,
   deleteMembershipController,
+  statusMembershipController,
 } from '../modules/membership/membership.controller';
 
 const router = express.Router();
 
-router.get('/membership', getAllMembership);
+router.get('/memberships', getAllMembership);
 router.get('/membership/:id', getIdMembership);
 router.post('/membership', createMembership);
-router.put('/membership/:id', updateMembershipController);
-router.delete('/membership/:id', deleteMembershipController);
+router.put('/membership/update/:id', updateMembershipController);
+router.put('/membership/delete/:id', deleteMembershipController);
+router.post('/membership/status/:id', statusMembershipController);
 
 export default router;

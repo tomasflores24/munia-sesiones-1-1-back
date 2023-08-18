@@ -1,5 +1,7 @@
 import { Membership } from '../../models/membership.model';
-import { CreateMembershipDTO } from './dto/create-membership';
+import { CreateMembershipDTO } from './dto/membership';
+import { handleError } from '../../common/errorResponse';
+
 
 export const getAllMembershipsFromDB = async () => {
   const memberships = await Membership.findAll();
@@ -36,7 +38,7 @@ export const updateMembershipByIdInDB = async (
   }
 };
 
-export const cancelMembershipByIdInDB = async (id: string) => {
+export const setMembershipByIdInDB = async (id: string) => {
   const IS_DELETE = true;
   const UnsubscribeMembership = { isDelete: IS_DELETE };
 
@@ -55,10 +57,17 @@ export const cancelMembershipByIdInDB = async (id: string) => {
   }
 };
 
-// handleCustomError
-function handleError(error: unknown, defaultMessage: string) {
-  if (error instanceof Error) {
-    throw new Error(error.message);
-  }
-  throw new Error(defaultMessage);
-}
+export const statusMembershipByIdInDB = async (
+    id: string,
+    data: Partial<Membership>
+  ) => {
+    try {
+      const membershipToUpdate = await Membership.findByPk(id);
+      if (!membershipToUpdate) throw new Error('Membership not found');
+      const updatedMembership = await membershipToUpdate.update(data);
+      return updatedMembership;
+    } catch (error) {
+      handleError(error, 'Error updating membership');
+    }
+};
+

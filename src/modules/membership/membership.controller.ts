@@ -1,12 +1,13 @@
 import { RequestHandler } from 'express';
 import {
+  StatusIdMembershipDTO,  
   CreateMembershipDTO,
   SearchIdMembershipDTO,
   UpdateMembership,
-} from './dto/create-membership';
+} from './dto/membership';
 
 import {
-  cancelMembershipByIdInDB,
+  setMembershipByIdInDB,
   createNewMembershipInDB,
   getAllMembershipsFromDB,
   getMembershipByIdFromDB,
@@ -68,8 +69,25 @@ export const updateMembershipController: RequestHandler = async (req, res) => {
 export const deleteMembershipController: RequestHandler = async (req, res) => {
   try {
     const responseId = await validateAndCreate(req.params, SearchIdMembershipDTO);
-    const deletedMemberShip = await cancelMembershipByIdInDB(responseId.id);
+    const deletedMemberShip = await setMembershipByIdInDB(responseId.id);
     return res.status(204).json({ deletedMemberShip });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+export const statusMembershipController: RequestHandler = async (req, res) => {
+  try {
+    const data = { ...req.body, ...req.params };
+    const { id, isActive } = await validateAndCreate(
+        data,
+        StatusIdMembershipDTO
+      );
+      const updatedMembership = await updateMembershipByIdInDB(id, {
+        isActive,
+      });
+  
+    return res.status(200).json({ updatedMembership });
   } catch (error) {
     handleErrorResponse(res, error);
   }
