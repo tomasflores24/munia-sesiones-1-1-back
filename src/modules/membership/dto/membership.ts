@@ -31,3 +31,15 @@ export class UpdateMembership extends BaseMembershipDTO {
   @IsUUID('4')
   id!: string;
 }
+
+export class StatusIdMembershipDTO {
+  @IsNotEmpty()
+  @IsUUID('4')
+  id!: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  isActive!: boolean
+}
+
+
