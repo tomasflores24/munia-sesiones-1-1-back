@@ -4,14 +4,16 @@ import {
   Column,
   DataType,
   PrimaryKey,
-  IsUUID,
+  AutoIncrement,
 } from 'sequelize-typescript';
-
-@Table({ tableName: 'gender' })
+@Table({ 
+  tableName: 'gender',
+  timestamps: false,
+})
 export class Gender extends Model {
-  @IsUUID(4)
   @PrimaryKey
-  @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, primaryKey: true })
+  @AutoIncrement
+  @Column({ type: DataType.INTEGER, primaryKey: true })
   public id!: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
