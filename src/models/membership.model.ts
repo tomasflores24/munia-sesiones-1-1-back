@@ -20,9 +20,9 @@ export class Membership extends Model {
   @Column({ type: DataType.FLOAT, allowNull: false })
   amount!: number;
 
-  @Column({ type: DataType.BOOLEAN, allowNull: false })
+  @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: true })
   isActive!: boolean;
 
-  @Column({ type: DataType.BOOLEAN, allowNull: false })
+  @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })
   isDelete!: boolean;
 }

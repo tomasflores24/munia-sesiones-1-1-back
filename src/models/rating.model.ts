@@ -20,6 +20,6 @@ export class Rating extends Model {
   @Column({ type: DataType.STRING, allowNull: false })
   comentary!: string;
 
-  @Column({ type: DataType.BOOLEAN, allowNull: false })
+  @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: true })
   isActive!: boolean;
 }

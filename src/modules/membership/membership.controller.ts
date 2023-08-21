@@ -48,7 +48,7 @@ export const createMembership: RequestHandler = async (req, res) => {
 export const updateMembershipController: RequestHandler = async (req, res) => {
   try {
     const data = { ...req.body, ...req.params };
-    const { id, amount, isActive, isDelete, name } = await validateAndCreate(
+    const { id, amount, isActive, name } = await validateAndCreate(
       data,
       UpdateMembership
     );
@@ -56,7 +56,6 @@ export const updateMembershipController: RequestHandler = async (req, res) => {
     const updatedMembership = await updateMembershipByIdInDB(id, {
       amount,
       isActive,
-      isDelete,
       name,
     });
 
