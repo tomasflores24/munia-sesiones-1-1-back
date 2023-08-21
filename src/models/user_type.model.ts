@@ -7,7 +7,10 @@ import {
   IsUUID,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'user_type' })
+@Table({ 
+  tableName: 'user_type',
+  timestamps: false,
+})
 export class User_type extends Model {
   @IsUUID(4)
   @PrimaryKey
