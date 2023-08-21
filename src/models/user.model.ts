@@ -29,6 +29,6 @@ export class User extends Model {
   @Column({ type: DataType.BOOLEAN, allowNull: false })
   isActive!: boolean;
 
-  @Column({ type: DataType.BOOLEAN, allowNull: false })
+  @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })
   isDelete!: boolean;
 }

@@ -8,14 +8,6 @@ class BaseMembershipDTO {
   @IsNotEmpty()
   @IsNumber()
   amount!: number;
-
-  @IsNotEmpty()
-  @IsBoolean()
-  isActive!: boolean;
-
-  @IsNotEmpty()
-  @IsBoolean()
-  isDelete!: boolean;
 }
 
 export class SearchIdMembershipDTO {
@@ -30,6 +22,10 @@ export class UpdateMembership extends BaseMembershipDTO {
   @IsNotEmpty()
   @IsUUID('4')
   id!: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  isActive!: boolean;
 }
 
 export class StatusIdMembershipDTO {
@@ -39,7 +35,5 @@ export class StatusIdMembershipDTO {
 
   @IsNotEmpty()
   @IsBoolean()
-  isActive!: boolean
+  isActive!: boolean;
 }
-
-
