@@ -12,3 +12,15 @@ export const UserType = [
     name: 'Admin',
   },
 ];
+
+export const GenderType = [
+  {
+    name: 'Masculino',
+  },
+  {
+    name: 'Femenino',
+  },
+  {
+    name: 'Otro',
+  },
+];
