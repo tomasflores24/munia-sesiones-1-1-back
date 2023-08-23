@@ -10,6 +10,7 @@ import {
 } from '../modules/membership/membership.controller';
 import { authProfile } from '../modules/auth/auth.controller';
 import { useValidatorMiddelware } from '../modules/auth/middleware/authValidation';
+import { createPurchase } from '../modules/purchase/purchase.contoller';
 
 const router = express.Router();
 
@@ -25,5 +26,8 @@ router.post('/membership/status/:id', statusMembershipController);
 
 // Auth
 router.post('/auth', useValidatorMiddelware, authProfile);
+
+//Purchase
+router.post('/purchase', createPurchase);
 
 export default router;
