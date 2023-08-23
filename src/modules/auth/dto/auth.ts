@@ -16,12 +16,9 @@ export class AuthProviderDTO {
   @IsString()
   last_name!: string;
 
-  // @IsNotEmpty()
-  // @IsInt()
-  // GenderId!: number;
-
-  // @IsInt()
-  // UserId!: number;
+  @IsNotEmpty()
+  @IsInt()
+  GenderId!: number;
 }
 
 export class AuthCollaboratorDTO extends AuthProviderDTO {

@@ -1,23 +1,22 @@
 import { handleError } from '../../common/errorResponse';
-import { Collaborator, Company, Provider, User } from '../../models';
+import { Collaborator, Company, Provider, User, User_type } from '../../models';
 import { hash } from 'argon2';
-import { AuthInDBF } from './interface';
+import { AuthInDBF, TypesAuth } from './interface';
 
 export const authInDB: AuthInDBF = async (profileData, userData, type) => {
   try {
     userData.password = await hash(userData.password);
-    const userCreated = await User.create(userData as any);
+    const userCreated = await User.create(userData as any, {
+      include: [User_type],
+    });
     const data = { ...profileData, UserId: userCreated.id };
-    // * Falta el GenderId en provide & collaborator
-    // * Falta el CompanyId en Collaborator
-    // * Falta el CountryId & User_type en "User"
 
-    if (type === 'collaborator') {
+    if (type === TypesAuth.COLLABORATOR) {
       const registeredCollaborator = await Collaborator.create(data, {
         include: User,
       });
       return registeredCollaborator;
-    } else if (type === 'provider') {
+    } else if (type === TypesAuth.PROVIDER) {
       const registeredProvider = await Provider.create(data, { include: User });
       return registeredProvider;
     } else {
@@ -32,3 +31,5 @@ export const authInDB: AuthInDBF = async (profileData, userData, type) => {
 // const userCreated = await User.create(userData, { include: [Country, User_type] });
 // created = await Collaborator.create(data, { include: User, Company,Gender });
 // created = await Provider.create(data, { include: User, Gender });
+// * Falta el CompanyId en Collaborator
+// * Falta el CountryId en "User"

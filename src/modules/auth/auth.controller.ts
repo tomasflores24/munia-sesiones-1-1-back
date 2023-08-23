@@ -10,7 +10,7 @@ export const authProfile: RequestHandler = async (req, res) => {
 
     const registered = await authInDB(profileData, userData, type);
 
-    return res.status(200).json({ registered });
+    return res.status(200).json({ registered, type: type });
   } catch (error) {
     handleErrorResponse(res, error);
   }

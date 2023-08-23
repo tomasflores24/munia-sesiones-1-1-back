@@ -2,10 +2,15 @@ import { Collaborator, Company, Provider } from '../../../models';
 import { CreateUserDTO } from '../../user/dto/user';
 import { AuthCollaboratorDTO, AuthCompanyDTO, AuthProviderDTO } from '../dto/auth';
 
+// 1 | Empresa
+// 2 | Colaborador
+// 3 | Profesional
+// 4 | Admin
+
 export enum TypesAuth {
-  COLLABORATOR = 'collaborator',
-  PROVIDER = 'provider',
-  COMPANY = 'company',
+  COMPANY = 'Empresa',
+  COLLABORATOR = 'Colaborador',
+  PROVIDER = 'Profesional',
 }
 
 type Type = TypesAuth.COLLABORATOR | TypesAuth.COMPANY | TypesAuth.PROVIDER;
