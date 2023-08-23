@@ -2,9 +2,12 @@ import { handleError } from '../../common/errorResponse';
 import { Collaborator, Company, Provider, User, User_type } from '../../models';
 import { hash } from 'argon2';
 import { AuthInDBF, TypesAuth } from './interface';
+import { checkEmailExists } from './utils/verify.utils';
 
 export const authInDB: AuthInDBF = async (profileData, userData, type) => {
   try {
+    await checkEmailExists(userData.email);
+
     userData.password = await hash(userData.password);
     const userCreated = await User.create(userData as any, {
       include: [User_type],
@@ -27,9 +30,4 @@ export const authInDB: AuthInDBF = async (profileData, userData, type) => {
     handleError(error, 'Error creating company');
   }
 };
-// * Validar que se haya creado el usuario correctamente;
-// const userCreated = await User.create(userData, { include: [Country, User_type] });
-// created = await Collaborator.create(data, { include: User, Company,Gender });
-// created = await Provider.create(data, { include: User, Gender });
-// * Falta el CompanyId en Collaborator
-// * Falta el CountryId en "User"
+
