@@ -1,6 +1,6 @@
 import { handleError } from './errorResponse';
-import { UserType, GenderType } from '../assets/defaultTypes';
-import { User_type, Gender} from '../models';
+import { UserType, GenderType, StatusType } from '../assets/defaultTypes';
+import { User_type, Gender, Status} from '../models';
 
 export const createDefaultTypesInDB = async () => {
   try {
@@ -12,6 +12,11 @@ export const createDefaultTypesInDB = async () => {
     for (const element of GenderType) {
       await Gender.findOrCreate({
         where: { name: element.name },
+      });
+    }
+    for (const element of StatusType) {
+      await Status.findOrCreate({
+        where: { status: element.status },
       });
     }
     return true;

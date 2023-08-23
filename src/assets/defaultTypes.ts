@@ -24,3 +24,15 @@ export const GenderType = [
     name: 'Otro',
   },
 ];
+
+export const StatusType = [
+  {
+    status: 'Aprobado',
+  },
+  {
+    status: 'Pendiente',
+  },
+  {
+    status: 'Cancelado',
+  },
+];
