@@ -6,13 +6,15 @@ import { configCors } from './config/cors.config';
 import router from './routes/router';
 import bodyParser from 'body-parser';
 import { createDefaultTypesInDB } from '../src/common/defaultTypes';
+import passport from 'passport';
+import { strategyValidation } from './config/jwt.config';
 
 const app = express();
 
 app.use(cors(configCors));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-
+passport.use(strategyValidation);
 app.use('/', router);
 
 const PORT = 3000;
