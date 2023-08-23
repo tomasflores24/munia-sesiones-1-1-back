@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEmail, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail, IsBoolean, IsInt } from 'class-validator';
 
 class BaseUserDTO {
   @IsNotEmpty()
@@ -28,9 +28,9 @@ class BaseUserDTO {
   @IsBoolean()
   isDelete?: boolean;
 
-  // @IsNotEmpty()
-  // @IsUUID('4')
-  // UserTypeId!: string;
+  @IsNotEmpty()
+  @IsInt()
+  UserTypeId!: number;
 }
 
 export class CreateUserDTO extends BaseUserDTO {}
