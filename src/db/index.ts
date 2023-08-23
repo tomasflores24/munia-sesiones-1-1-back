@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import {
   User,
   Country,
@@ -15,7 +15,7 @@ import {
   Service,
   User_type,
 } from '../models';
-dotenv.config();
+
 
 const { DB_PASSWORD, DB_NAME, DB_HOST, DB_USER } = process.env;
 const DB_PORT: number = 5432;

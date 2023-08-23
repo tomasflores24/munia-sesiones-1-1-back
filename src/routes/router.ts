@@ -8,6 +8,8 @@ import {
   deleteMembershipController,
   statusMembershipController,
 } from '../modules/membership/membership.controller';
+import { authProfile } from '../modules/auth/auth.controller';
+import { useValidatorMiddelware } from '../modules/auth/middleware/authValidation';
 
 const router = express.Router();
 
@@ -21,6 +23,7 @@ router.put('/membership/update/:id', updateMembershipController);
 router.put('/membership/delete/:id', deleteMembershipController);
 router.post('/membership/status/:id', statusMembershipController);
 
-
+// Auth
+router.post('/auth', useValidatorMiddelware, authProfile);
 
 export default router;
