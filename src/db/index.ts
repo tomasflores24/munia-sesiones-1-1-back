@@ -89,6 +89,9 @@ Purchase_membership.belongsTo(Company);
 Membership.hasMany(Purchase_membership);
 Purchase_membership.belongsTo(Membership);
 
+Status.hasMany(Purchase_membership);
+Purchase_membership.belongsTo(Status);
+
 //membership_relationship
 Purchase_membership.hasMany(Membership_relationship);
 Membership_relationship.belongsTo(Purchase_membership);
