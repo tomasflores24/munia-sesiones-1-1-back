@@ -7,7 +7,7 @@ import {
   IsUUID,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'company' })
+@Table({ tableName: 'company', timestamps: false })
 export class Company extends Model {
   @IsUUID(4)
   @PrimaryKey
