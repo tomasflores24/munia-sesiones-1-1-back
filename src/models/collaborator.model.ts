@@ -7,7 +7,7 @@ import {
   IsUUID,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'collaborator' })
+@Table({ tableName: 'collaborator', timestamps: false })
 export class Collaborator extends Model {
   @IsUUID(4)
   @PrimaryKey
