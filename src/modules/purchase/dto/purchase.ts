@@ -13,9 +13,9 @@ class BasePurchaseDTO {
   @IsDateString()
   date_purchase!: Date;
 
-  //@IsNotEmpty()
-  //@IsUUID('4')
-  //CompanyId!: string;
+  @IsNotEmpty()
+  @IsUUID('4')
+  CompanyId!: string;
   
   @IsNotEmpty()
   @IsUUID('4')
