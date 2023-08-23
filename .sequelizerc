@@ -1,0 +1,7 @@
+module.exports = {
+  "config": "./src/db/dbconfig/migration.config.json",
+  "models-path": "./src/models",
+  "migrations-path": "./src/db/dbconfig/migrations",
+  "seeders-path": "./src/db/dbconfig/seeders"
+};
+
