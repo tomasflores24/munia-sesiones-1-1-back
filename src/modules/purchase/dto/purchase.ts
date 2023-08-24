@@ -27,3 +27,18 @@ class BasePurchaseDTO {
 }
 
 export class CreatePurchaseDTO extends BasePurchaseDTO {}
+
+export class UpdatePurchaseDTO {
+  @IsNotEmpty()
+  @IsUUID('4')
+  id!: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  StatusId!: number;
+}
+export class SearchIdPurchaseDTO {
+  @IsNotEmpty()
+  @IsUUID('4')
+  id!: string;
+}
