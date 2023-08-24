@@ -10,7 +10,10 @@
     "dev": "ts-node-dev --clear src/index.ts",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "sequelize-cli db:migrate",
-    "migrations:revert": "sequelize-cli db:migrate:undo"
+    "migrations:revert": "sequelize-cli db:migrate:undo",
+    "migrations:revert:all": "sequelize-cli db:migrate:undo:all",
+    "migrations:revert:specific": "sequelize-cli db:migrate:undo:all --to"
+
   },
   "keywords": [],
   "author": "",
