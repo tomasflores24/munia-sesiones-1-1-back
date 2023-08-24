@@ -10,13 +10,9 @@ const jwtOptions = {
 };
 
 const strategyValidation = new JwtStrategy(jwtOptions, (jwt_payload, done) => {
-  console.log(jwt_payload);
-  done(null, 'Successfully');
-  // if (jwt_payload.email && jwt_payload.UserId) {
-  //   done(null, 'Successfully');
-  // } else {
-  //   done(null, false);
-  // }
+  done(null, jwt_payload);
+  // const condition = jwt_payload.email && jwt_payload.UserId ? jwt_payload : false;
+  // done(null, condition, { status: 401, message: 'Unauthorized' });
 });
 
 export { jwtOptions, strategyValidation };

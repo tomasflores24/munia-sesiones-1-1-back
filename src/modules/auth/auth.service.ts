@@ -15,19 +15,14 @@ export const authInDB: AuthInDBF = async (profileData, userData, type) => {
     const data = { ...profileData, UserId: userCreated.id };
 
     if (type === TypesAuth.COLLABORATOR) {
-      const registeredCollaborator = await Collaborator.create(data, {
-        include: User,
-      });
-      return registeredCollaborator;
+      await Collaborator.create(data, { include: User });
     } else if (type === TypesAuth.PROVIDER) {
-      const registeredProvider = await Provider.create(data, { include: User });
-      return registeredProvider;
+      await Provider.create(data, { include: User });
     } else {
-      const registeredCompany = await Company.create(data, { include: User });
-      return registeredCompany;
+      await Company.create(data, { include: User });
     }
+    return { email: userCreated.email, UserId: userCreated.id };
   } catch (error) {
-    handleError(error, 'Error creating company');
+    handleError(error, 'Error creating');
   }
 };
-
