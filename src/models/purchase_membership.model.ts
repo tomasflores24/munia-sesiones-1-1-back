@@ -19,7 +19,4 @@ export class Purchase_membership extends Model {
 
   @Column({ type: DataType.FLOAT, allowNull: false })
   amount!: number;
-
-  @Column({ type: DataType.DATE, allowNull: false })
-  date_purchase!: Date;
 }
