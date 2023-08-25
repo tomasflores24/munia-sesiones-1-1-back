@@ -13,6 +13,6 @@ router.use('/membership', MembershipsRouter);
 router.post('/auth', useValidatorMiddelware, authProfile);
 
 //Purchase
-router.use('/', purchaseRouter);
+router.use('/purchase', purchaseRouter);
 
 export default router;
