@@ -2,7 +2,7 @@
 import { CreateUserDTO } from '../../user/dto/user';
 import { AuthCollaboratorDTO, AuthCompanyDTO, AuthProviderDTO } from '../dto/auth';
 
-export enum TypesAuth {
+enum TypesAuth {
   COMPANY = 'Empresa',
   COLLABORATOR = 'Colaborador',
   PROVIDER = 'Profesional',
@@ -14,6 +14,6 @@ type AuthInDBF = (
   profileData: AuthCompanyDTO | AuthProviderDTO | AuthCollaboratorDTO,
   userData: CreateUserDTO,
   type: Type
-) => Promise<{ email: string; UserId: string } | undefined>;
+) => Promise<{ email: string; UserId: string }>;
 
-export { AuthInDBF };
+export { AuthInDBF, TypesAuth };

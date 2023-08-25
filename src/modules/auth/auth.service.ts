@@ -23,6 +23,6 @@ export const authInDB: AuthInDBF = async (profileData, userData, type) => {
     }
     return { email: userCreated.email, UserId: userCreated.id };
   } catch (error) {
-    handleError(error, 'Error creating');
+    return handleError(error, 'Error creating');
   }
 };
