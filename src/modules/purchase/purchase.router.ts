@@ -3,10 +3,10 @@ import { createPurchase, updatePurchase, getIdPurchase, getPurchaseByCompanyAndD
 
 const purchaseRouter = express.Router();
 //Purchase
-purchaseRouter.post('/purchase', createPurchase);
-purchaseRouter.put('/purchase/:id', updatePurchase);
-purchaseRouter.get('/purchase/:id', getIdPurchase);
-purchaseRouter.get('/purchase', getPurchaseByCompanyAndDate);
+purchaseRouter.post('', createPurchase);
+purchaseRouter.put('/:id', updatePurchase);
+purchaseRouter.get('/:id', getIdPurchase);
+purchaseRouter.get('', getPurchaseByCompanyAndDate);
 
 
 export default purchaseRouter;
