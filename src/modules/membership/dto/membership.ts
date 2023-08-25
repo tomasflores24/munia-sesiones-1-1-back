@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 class BaseMembershipDTO {
   @IsNotEmpty()
@@ -12,7 +12,7 @@ class BaseMembershipDTO {
 
 export class SearchIdMembershipDTO {
   @IsNotEmpty()
-  @IsUUID('4')
+  @IsString()
   id!: string;
 }
 
@@ -20,7 +20,7 @@ export class CreateMembershipDTO extends BaseMembershipDTO {}
 
 export class UpdateMembership extends BaseMembershipDTO {
   @IsNotEmpty()
-  @IsUUID('4')
+  @IsString()
   id!: string;
 
   @IsNotEmpty()
@@ -30,7 +30,7 @@ export class UpdateMembership extends BaseMembershipDTO {
 
 export class StatusIdMembershipDTO {
   @IsNotEmpty()
-  @IsUUID('4')
+  @IsString()
   id!: string;
 
   @IsNotEmpty()

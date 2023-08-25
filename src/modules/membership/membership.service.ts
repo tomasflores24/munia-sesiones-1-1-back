@@ -1,10 +1,34 @@
 import { Membership } from '../../models/membership.model';
 import { CreateMembershipDTO } from './dto/membership';
 import { handleError } from '../../common/errorResponse';
+import { Op } from 'sequelize';
 
 
-export const getAllMembershipsFromDB = async () => {
-  const memberships = await Membership.findAll();
+export const getAllMembershipsFromDB = async (
+  startDate?: string,
+  endDate?: string
+) => {
+
+  const whereClause: Record<string, any> = {
+    isDelete: false,
+  };
+
+  if (startDate || endDate) {
+    let formattedStartDate: Date | undefined;
+    let formattedEndDate: Date | undefined;
+
+    formattedStartDate = new Date(`${startDate} 00:00:00`);
+    formattedEndDate = new Date(`${endDate} 23:59:59`);
+  
+    whereClause.createdAt = {
+      [Op.between]: [formattedStartDate, formattedEndDate],
+    };
+  }
+
+  const memberships = await Membership.findAll({
+    where: whereClause,
+  });
+
   if (memberships.length === 0) throw new Error('No membership found');
   return memberships;
 };
