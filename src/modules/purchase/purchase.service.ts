@@ -40,7 +40,7 @@ export const getPurchasesByCompanyIdAndDateRangeInDB = async (
 
   /* where: {
     CompanyId,
-    date_purchase: {
+    createdAt: {
       [Op.between]: [startDate, endDate],
     },
   }
@@ -58,7 +58,7 @@ export const getPurchasesByCompanyIdAndDateRangeInDB = async (
     formattedStartDate = new Date(`${startDate} 00:00:00`);
     formattedEndDate = new Date(`${endDate} 23:59:59`);
   
-    whereClause.date_purchase = {
+    whereClause.createdAt = {
       [Op.between]: [formattedStartDate, formattedEndDate],
     };
   }

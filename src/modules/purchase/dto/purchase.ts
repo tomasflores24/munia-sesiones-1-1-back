@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsUUID, IsDateString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 
 class BasePurchaseDTO {
   @IsNotEmpty()
@@ -10,16 +10,12 @@ class BasePurchaseDTO {
   amount!: number;
 
   @IsNotEmpty()
-  @IsDateString()
-  date_purchase!: Date;
-
-  @IsNotEmpty()
   @IsUUID('4')
   CompanyId!: string;
-  
+
   @IsNotEmpty()
-  @IsUUID('4')
-  MembershipId!: string;
+  @IsNumber()
+  MembershipId!: number;
 
   @IsNotEmpty()
   @IsNumber()
