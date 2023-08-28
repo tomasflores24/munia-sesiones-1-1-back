@@ -1,26 +1,10 @@
-import { validateAndCreate } from "../../common/validateInstance";
-import { handleErrorResponse } from "../../common/errorResponse";
-import { CreateCountriesDTO } from "./dto/countries";
 import { RequestHandler } from "express";
-import { Countries } from "../../assets/countries";
-import {
-  createNewCountriesInDB,
-  getAllCountriesFromDB,
-} from "./countries.service";
+import { handleErrorResponse } from "../../common/errorResponse";
+import { createNewCountriesInDB, getAllCountriesFromDB } from "./countries.service";
 
 export const createCountries: RequestHandler = async (_req, res) => {
   try {
-    const countries = Countries.map((country) => {
-      return {
-        name: country.name,
-        areaCode: country.areaCode,
-        abv: country.abv,
-        latlong: country.latlong,
-        flag: country.flag,
-      };
-    });
-    const response = await validateAndCreate(countries, CreateCountriesDTO);
-    const newCountries = await createNewCountriesInDB(response);
+    const newCountries = await createNewCountriesInDB();
     return res.status(201).json({ newCountries });
   } catch (error) {
     handleErrorResponse(res, error);

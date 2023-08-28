@@ -1,26 +1,25 @@
 import { Country } from "../../models";
-import { CreateCountriesDTO } from "../countries/dto/countries";
+import { Countries } from "../../assets/countries";
+import { handleError } from '../../common/errorResponse';
 
-export const createNewCountriesInDB = async (
-  body: Partial<CreateCountriesDTO>
-) => {
+
+export const createNewCountriesInDB = async () => {
   try {
-    const countries = await Country.create(body);
-    return countries;
+    for (const element of Countries) {
+      await Country.findOrCreate({
+        where: { name: element.name },
+        defaults: { area_code:element.areaCode }
+      });
+    }
+    return "Countries created successfully";
   } catch (error) {
-    handleError(error, "Error creating countries");
+    handleError(error, 'Countries were not successfully created');
   }
 };
 
 export const getAllCountriesFromDB = async () => {
   const countries = await Country.findAll();
-  if (countries.length === 0) throw new Error("No country found");
+  if (countries.length === 0) throw new Error("No countries found");
   return countries;
 };
 
-function handleError(error: unknown, defaultMessage: string) {
-  if (error instanceof Error) {
-    throw new Error(error.message);
-  }
-  throw new Error(defaultMessage);
-}
