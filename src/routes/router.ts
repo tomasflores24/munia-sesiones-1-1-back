@@ -1,9 +1,8 @@
 import express from 'express';
-import { authProfile } from '../modules/auth/auth.controller';
-import { useValidatorMiddelware } from '../modules/auth/middleware/authValidation';
 import purchaseRouter from '../modules/purchase/purchase.router';
 import MembershipsRouter from '../modules/membership/membership.router';
 import countriesRouter from '../modules/countries/countries.router';
+import authRouter from '../modules/auth/auth.router';
 
 const router = express.Router();
 
@@ -11,7 +10,7 @@ const router = express.Router();
 router.use('/membership', MembershipsRouter);
 
 // Auth
-router.post('/auth', useValidatorMiddelware, authProfile);
+router.use('/auth', authRouter);
 
 //Purchase
 router.use('/purchase', purchaseRouter);
