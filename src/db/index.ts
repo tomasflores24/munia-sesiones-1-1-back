@@ -14,6 +14,9 @@ import {
   Rating,
   Service,
   User_type,
+  Available,
+  Appointment,
+  Provider_service,
 } from '../models';
 
 
@@ -41,6 +44,9 @@ const sequelize = new Sequelize({
     Rating,
     Service,
     User_type,
+    Available,
+    Appointment,
+    Provider_service
   ],
   logging: false,
   native: false,
@@ -109,7 +115,33 @@ Provider.hasMany(Membership_relationship);
 Membership_relationship.belongsTo(Provider);
 
 //provider_service
-Provider.belongsToMany(Service, { through: 'provider_service', timestamps: false });
-Service.belongsToMany(Provider, { through: 'provider_service', timestamps: false });
+Provider.hasMany(Provider_service);
+Provider_service.belongsTo(Provider);
+
+Service.hasMany(Provider_service);
+Provider_service.belongsTo(Service);
+
+//available
+Provider.hasMany(Available);
+Available.belongsTo(Provider);
+
+Appointment.hasMany(Available);
+Available.belongsTo(Appointment);
+
+Status.hasMany(Available);
+Available.belongsTo(Status);
+
+//appointment
+Provider.hasMany(Appointment);
+Appointment.belongsTo(Provider);
+
+Collaborator.hasMany(Appointment);
+Appointment.belongsTo(Collaborator);
+
+Available.hasMany(Appointment);
+Appointment.belongsTo(Available);
+
+Company.hasMany(Appointment);
+Appointment.belongsTo(Company);
 
 export default sequelize;

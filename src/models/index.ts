@@ -1,3 +1,5 @@
+export * from './appointment.model';
+export * from './available.model';
 export * from './collaborator.model';
 export * from './company.model';
 export * from './country.model';
@@ -5,6 +7,7 @@ export * from './gender.model';
 export * from './membership.model';
 export * from './membership_relationship.model';
 export * from './provider.model';
+export * from './provider_service.model';
 export * from './purchase_membership.model';
 export * from './rating.model';
 export * from './service.model';

@@ -27,12 +27,24 @@ export const GenderType = [
 
 export const StatusType = [
   {
-    status: 'Aprobado',
+    status: 'Available',
   },
   {
-    status: 'Pendiente',
+    status: 'Complete',
   },
   {
-    status: 'Cancelado',
+    status: 'Cancelled',
+  },
+  {
+    status: 'InProgress',
+  },
+  {
+    status: 'Assigned',
+  },
+  {
+    status: 'No Available',
+  },
+  {
+    status: 'InApproval',
   },
 ];
