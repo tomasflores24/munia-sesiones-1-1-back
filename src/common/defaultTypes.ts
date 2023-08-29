@@ -1,6 +1,6 @@
 import { handleError } from './errorResponse';
-import { UserType, GenderType, StatusType } from '../assets/defaultTypes';
-import { User_type, Gender, Status} from '../models';
+import { UserType, GenderType, StatusType, CategoriesType, ServiceType } from '../assets/defaultTypes';
+import { User_type, Gender, Status, Categories, Service } from '../models';
 
 export const createDefaultTypesInDB = async () => {
   try {
@@ -19,6 +19,26 @@ export const createDefaultTypesInDB = async () => {
         where: { status: element.status },
       });
     }
+    for (const element of CategoriesType) {
+      await Categories.findOrCreate({
+        where: { name: element.name },
+      });
+    }
+    for (const element of ServiceType) {
+      const category = await Categories.findOne({
+        where: { name: element.category },
+      });
+    
+      if (category) {
+        await Service.findOrCreate({
+          where: { name: element.name },
+          defaults: {
+            CategoryId: category.id,
+          },
+        });
+      }
+    }
+    
     return true;
   } catch (error) {
     handleError(error, 'Error creating user types');

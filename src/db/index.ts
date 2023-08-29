@@ -18,6 +18,7 @@ import {
   Appointment,
   Provider_service,
 } from '../models';
+import { Categories } from '../models/categories.models';
 
 
 const { DB_PASSWORD, DB_NAME, DB_HOST, DB_USER } = process.env;
@@ -46,7 +47,8 @@ const sequelize = new Sequelize({
     User_type,
     Available,
     Appointment,
-    Provider_service
+    Provider_service,
+    Categories
   ],
   logging: false,
   native: false,
@@ -143,5 +145,9 @@ Appointment.belongsTo(Available);
 
 Company.hasMany(Appointment);
 Appointment.belongsTo(Company);
+
+//service
+Categories.hasMany(Service);
+Service.belongsTo(Categories);
 
 export default sequelize;

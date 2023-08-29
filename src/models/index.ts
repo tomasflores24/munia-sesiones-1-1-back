@@ -1,5 +1,6 @@
 export * from './appointment.model';
 export * from './available.model';
+export * from './categories.models';
 export * from './collaborator.model';
 export * from './company.model';
 export * from './country.model';
