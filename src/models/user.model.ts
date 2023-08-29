@@ -14,6 +14,9 @@ export class User extends Model {
   @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4, primaryKey: true })
   public id!: string;
 
+  @Column({ type: DataType.STRING })
+  profilePic!: string;
+
   @Column({ type: DataType.STRING, allowNull: false })
   name!: string;
 
