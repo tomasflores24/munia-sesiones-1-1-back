@@ -1,17 +1,11 @@
 import { handleError } from '../../common/errorResponse';
-import { Collaborator, Company, Provider, User, User_type } from '../../models';
-import { hash } from 'argon2';
+import { Collaborator, Company, Provider, User } from '../../models';
 import { AuthInDBF, TypesAuth } from './interface';
-import { checkEmailExists } from './utils/verify.utils';
+import { createUserInDB } from '../user/user.service';
 
 export const authInDB: AuthInDBF = async (profileData, userData, type) => {
   try {
-    await checkEmailExists(userData.email);
-
-    userData.password = await hash(userData.password);
-    const userCreated = await User.create(userData as any, {
-      include: [User_type],
-    });
+    const userCreated = await createUserInDB(userData);
     const data = { ...profileData, UserId: userCreated.id };
 
     if (type === TypesAuth.COLLABORATOR) {
