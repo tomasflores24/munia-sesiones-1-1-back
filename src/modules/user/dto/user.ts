@@ -14,9 +14,9 @@ class BaseUserDTO {
   @IsString()
   password!: string;
 
-  // @IsNotEmpty()
-  // @IsUUID('4')
-  // CountryId!: string;
+  @IsNotEmpty()
+  @IsInt()
+  CountryId!: string;
 
   @IsNotEmpty()
   @IsString()
