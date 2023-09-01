@@ -27,7 +27,7 @@ const uploadFileS3: UploadFileS3 = async (filename, bucketName, userId, folder) 
     const user = await User.findByPk(userId);
     if (!user) throw new Error('User not found');
 
-    const key = folder + '/' + filename;
+    const key = folder + '/' + userId + '/' + filename;
     const path = DIRECTORY_UPLOADS + '/' + filename;
 
     const uploadParams = {
