@@ -6,4 +6,6 @@ export class SearchStatisticsDTO extends User {
   UserTypeId?: number;
   
   User_type?: User_type;
+
+  createdAt?: undefined;
 }

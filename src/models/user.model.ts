@@ -34,7 +34,4 @@ export class User extends Model {
 
   @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })
   isDelete!: boolean;
-
-  @Column({ type: DataType.DATE, allowNull: false })
-  registerDate!: Date;
 }

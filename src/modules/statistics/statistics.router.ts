@@ -1,9 +1,10 @@
 import express from 'express';
-import { getStatisticsByDate } from "./statistics.controller";
+import { getStatisticsByDemographic, getStatisticsByUser } from "./statistics.controller";
 
 const statisticsRouter = express.Router();
 //Statistics
-statisticsRouter.get('', getStatisticsByDate);
+statisticsRouter.get('/user', getStatisticsByUser);
+statisticsRouter.get('/demographic', getStatisticsByDemographic);
 
 
 export default statisticsRouter;
