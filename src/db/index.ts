@@ -8,7 +8,7 @@ import {
   Collaborator,
   Company,
   Membership,
-  Membership_relationship,
+  Session_per_collaborators,
   Provider,
   Purchase_membership,
   Rating,
@@ -16,17 +16,22 @@ import {
   User_type,
   Available,
   Appointment,
-  Provider_service,
+  Provider_assign_service,
 } from '../models';
-import { Categories } from '../models/categories.models';
+import { Categories } from '../models/categories.model';
 
 
 const { DB_PASSWORD, DB_NAME, DB_HOST, DB_USER } = process.env;
-const DB_PORT: number = 5432;
+const DB_PORT = +(process.env.DB_PORT || 5432);
 
 const sequelize = new Sequelize({
   database: DB_NAME,
   dialect: 'postgres',
+  // dialectOptions: {
+  //   ssl: {
+  //      rejectUnauthorized: false,
+  //   }
+  // },
   username: DB_USER,
   password: DB_PASSWORD,
   host: DB_HOST,
@@ -39,7 +44,7 @@ const sequelize = new Sequelize({
     Collaborator,
     Company,
     Membership,
-    Membership_relationship,
+    Session_per_collaborators,
     Provider,
     Purchase_membership,
     Rating,
@@ -47,7 +52,7 @@ const sequelize = new Sequelize({
     User_type,
     Available,
     Appointment,
-    Provider_service,
+    Provider_assign_service,
     Categories
   ],
   logging: false,
@@ -100,28 +105,22 @@ Purchase_membership.belongsTo(Membership);
 Status.hasMany(Purchase_membership);
 Purchase_membership.belongsTo(Status);
 
-//membership_relationship
-Purchase_membership.hasMany(Membership_relationship);
-Membership_relationship.belongsTo(Purchase_membership);
+//session_per_collaborators
+Purchase_membership.hasMany(Session_per_collaborators);
+Session_per_collaborators.belongsTo(Purchase_membership);
 
-Status.hasMany(Membership_relationship);
-Membership_relationship.belongsTo(Status);
+Collaborator.hasMany(Session_per_collaborators);
+Session_per_collaborators.belongsTo(Collaborator);
 
-Service.hasMany(Membership_relationship);
-Membership_relationship.belongsTo(Service);
+Company.hasMany(Session_per_collaborators);
+Session_per_collaborators.belongsTo(Company);
 
-Collaborator.hasMany(Membership_relationship);
-Membership_relationship.belongsTo(Collaborator);
+//provider_assign_service
+Provider.hasMany(Provider_assign_service);
+Provider_assign_service.belongsTo(Provider);
 
-Provider.hasMany(Membership_relationship);
-Membership_relationship.belongsTo(Provider);
-
-//provider_service
-Provider.hasMany(Provider_service);
-Provider_service.belongsTo(Provider);
-
-Service.hasMany(Provider_service);
-Provider_service.belongsTo(Service);
+Service.hasMany(Provider_assign_service);
+Provider_assign_service.belongsTo(Service);
 
 //available
 Provider.hasMany(Available);
@@ -143,8 +142,8 @@ Appointment.belongsTo(Collaborator);
 Available.hasMany(Appointment);
 Appointment.belongsTo(Available);
 
-Company.hasMany(Appointment);
-Appointment.belongsTo(Company);
+Service.hasMany(Appointment);
+Appointment.belongsTo(Service);
 
 //service
 Categories.hasMany(Service);
