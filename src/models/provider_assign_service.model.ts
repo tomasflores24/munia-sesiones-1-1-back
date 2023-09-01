@@ -8,10 +8,10 @@ import {
 } from 'sequelize-typescript';
 
 @Table({
-  tableName: 'provider_service',
+  tableName: 'provider_assign_service',
   timestamps: false,
 })
-export class Provider_service extends Model {
+export class Provider_assign_service extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column({ type: DataType.INTEGER, primaryKey: true })
