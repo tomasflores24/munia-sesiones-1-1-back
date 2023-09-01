@@ -16,4 +16,7 @@ export class Collaborator extends Model {
 
   @Column({ type: DataType.STRING, allowNull: false })
   last_name!: string;
+
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  age!: number;
 }

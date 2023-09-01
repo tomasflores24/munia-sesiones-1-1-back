@@ -1,22 +1,35 @@
 import { RequestHandler } from 'express';
 import { handleErrorResponse } from '../../common/errorResponse';
-import { getStatisticsInDB } from './statistics.service';
+import { getDemographicInDB, getAllUserInDB } from './statistics.service';
 
-export const getStatisticsByDate: RequestHandler = async (req, res) => {
-    try {
-      const { startDate, endDate } = req.query;
-  
-      if (!startDate || !endDate) {
-        throw new Error('Invalid request parameters');
-      }
-  
-      const statistics = await getStatisticsInDB(
-        startDate as string,
-        endDate as string,
-      );
-  
-      return res.status(200).json({ statistics });
-    } catch (error) {
-      handleErrorResponse(res, error);
+export const getStatisticsByUser: RequestHandler = async (_req, res) => {
+  try {
+    const statistics = await getAllUserInDB();
+    return res.status(200).json({ statistics });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+export const getStatisticsByDemographic: RequestHandler = async (req, res) => {
+  try {
+    const { CategoryId, ServiceId ,startDate, endDate } = req.query;
+
+    if (!CategoryId || !startDate || !endDate) {
+      throw new Error('Invalid request parameters');
     }
-  };
+
+    const statistics = await getDemographicInDB(
+      startDate as string,
+      endDate as string,
+      CategoryId as string,
+      ServiceId as string,
+    );
+
+    return res.status(200).json({ statistics });
+  } catch (error) {
+    handleErrorResponse(res, error);
+  }
+};
+
+

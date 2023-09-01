@@ -126,21 +126,19 @@ Provider_assign_service.belongsTo(Service);
 Provider.hasMany(Available);
 Available.belongsTo(Provider);
 
-Appointment.hasMany(Available);
-Available.belongsTo(Appointment);
-
 Status.hasMany(Available);
 Available.belongsTo(Status);
 
+Available.belongsTo(Appointment, { foreignKey: 'AppointmentId', as: 'Appointment' });
+
 //appointment
+Appointment.belongsTo(Available, { foreignKey: 'AvailableId', as: 'Available' });
+
 Provider.hasMany(Appointment);
 Appointment.belongsTo(Provider);
 
 Collaborator.hasMany(Appointment);
 Appointment.belongsTo(Collaborator);
-
-Available.hasMany(Appointment);
-Appointment.belongsTo(Available);
 
 Service.hasMany(Appointment);
 Appointment.belongsTo(Service);

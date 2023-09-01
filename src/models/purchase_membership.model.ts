@@ -18,5 +18,5 @@ export class Purchase_membership extends Model {
   purchased_sessions!: number;
 
   @Column({ type: DataType.FLOAT, allowNull: false })
-  amount!: number;
+  amountHistory!: number;
 }
