@@ -6,7 +6,6 @@ import { handleErrorResponse } from '../../common/errorResponse';
 const loginUser: RequestHandler = async (req, res) => {
   try {
     const { email, password } = req.body.user;
-    console.log(' x credentrial');
 
     const result = await verifyUser(email, password);
 
