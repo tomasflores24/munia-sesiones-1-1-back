@@ -10,9 +10,8 @@ const jwtOptions = {
 };
 
 const strategyValidation = new JwtStrategy(jwtOptions, (jwt_payload, done) => {
-  done(null, jwt_payload);
-  // const condition = jwt_payload.email && jwt_payload.UserId ? jwt_payload : false;
-  // done(null, condition, { status: 401, message: 'Unauthorized' });
+  const hasUser = jwt_payload.email && jwt_payload.UserId ? jwt_payload : false;
+  done(null, hasUser, { status: 401, message: 'Unauthorized' });
 });
 
 export { jwtOptions, strategyValidation };
