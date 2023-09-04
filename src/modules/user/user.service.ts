@@ -20,11 +20,26 @@ const createUserInDB = async (userData: CreateUserDTO) => {
 const updateUserInDB = async (userId: string, userData: CreateUserDTO) => {
   try {
     const user = await User.findByPk(userId);
+
     if (!user) throw new Error('User not found');
+    if (userData.email && userData.email !== user.email)
+      await checkEmailExists(userData.email);
+
     await user.update(userData);
   } catch (error) {
     return handleError(error, 'Error updating');
   }
 };
 
-export { createUserInDB, updateUserInDB };
+const deleteUserInDB = async (userId: string) => {
+  try {
+    const deleteUser = { isDelete: true };
+    const user = await User.findByPk(userId);
+    if (!user) throw new Error('User not found');
+    await user.update(deleteUser);
+  } catch (error) {
+    return handleError(error, 'Error updating');
+  }
+};
+
+export { createUserInDB, updateUserInDB, deleteUserInDB };

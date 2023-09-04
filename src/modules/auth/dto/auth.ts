@@ -25,6 +25,9 @@ export class AuthCollaboratorDTO extends AuthProviderDTO {
   // @IsNotEmpty()
   // @IsUUID('4')
   // CompanyId!: string;
+  @IsInt()
+  @IsNotEmpty()
+  age!: number;
 }
 
 export class AuthTypeDTO {
