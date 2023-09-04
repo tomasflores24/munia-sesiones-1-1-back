@@ -6,7 +6,6 @@ import {
   getCollaboratorByIdInDB,
   updateCollaboratorInDB,
 } from './collaborator.service';
-import { UpdateCollaboratorDTO } from './dto';
 
 const getAllCollaborator: RequestHandler = async (_req, res) => {
   try {
@@ -26,17 +25,18 @@ const getCollaboratorById: RequestHandler = async (req, res) => {
   }
 };
 
-const createCollaborator: RequestHandler = (req, res) => {
+const createCollaborator: RequestHandler = (_req, res) => {
   return res.json({ message: 'Collaborator create' });
 };
 
 const updateCollaborator: RequestHandler = async (req, res) => {
   try {
-    const collaboratorData: UpdateCollaboratorDTO = {
+    const collaboratorData = {
       ...req.body.collaborator,
       ...req.params,
     };
     const profileData = req.body.user;
+
     const updateCollaborator = await updateCollaboratorInDB(
       collaboratorData,
       profileData

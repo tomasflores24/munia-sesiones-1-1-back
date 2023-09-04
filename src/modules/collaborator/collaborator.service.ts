@@ -1,4 +1,4 @@
-import { FindOptions, where } from 'sequelize';
+import { FindOptions } from 'sequelize';
 import { handleError } from '../../common/errorResponse';
 import { Collaborator, User } from '../../models';
 import { CreateUserDTO } from '../user/dto/user';
@@ -56,9 +56,9 @@ export const deleteCollaboratorInDB = async (collaboratorData: any) => {
     if (!collaborator) throw new Error('Collaborator not found');
 
     await updateUserInDB(collaboratorData.UserId, deleteUser as any);
-
+    await collaborator.update(collaboratorData);
     return `Collaborator ${collaboratorData.id} deleted`;
   } catch (error) {
-    handleError(error, 'Error deleted user');
+    return handleError(error, 'Error deleted user');
   }
 };

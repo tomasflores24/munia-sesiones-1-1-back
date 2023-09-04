@@ -30,8 +30,4 @@ collaboratorRouter.put(
   deleteCollaborator
 );
 
-collaboratorRouter.post('/prueba', (req, res) => {
-  return res.json({});
-});
-
 export default collaboratorRouter;
