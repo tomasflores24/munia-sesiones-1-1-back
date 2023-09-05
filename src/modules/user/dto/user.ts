@@ -34,3 +34,36 @@ class BaseUserDTO {
 }
 
 export class CreateUserDTO extends BaseUserDTO {}
+
+export class UpdateUserDTO {
+  @IsNotEmpty()
+  @IsString()
+  name!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsEmail()
+  email!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password!: string;
+
+  @IsNotEmpty()
+  @IsInt()
+  CountryId!: number;
+
+  @IsNotEmpty()
+  @IsString()
+  city!: string;
+
+  // @IsBoolean()
+  // isActive!: boolean;
+
+  // @IsBoolean()
+  // isDelete?: boolean;
+
+  // @IsNotEmpty()
+  // @IsInt()
+  // UserTypeId!: number;
+}
