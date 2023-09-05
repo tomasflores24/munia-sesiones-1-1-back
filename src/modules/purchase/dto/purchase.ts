@@ -7,7 +7,7 @@ class BasePurchaseDTO {
 
   @IsNotEmpty()
   @IsNumber()
-  amount!: number;
+  amountHistory!: number;
 
   @IsNotEmpty()
   @IsUUID('4')

@@ -13,9 +13,9 @@ export const getStatisticsByUser: RequestHandler = async (_req, res) => {
 
 export const getStatisticsByDemographic: RequestHandler = async (req, res) => {
   try {
-    const { CategoryId, ServiceId ,startDate, endDate } = req.query;
+    const { CompanyId, CategoryId, ServiceId ,startDate, endDate } = req.query;
 
-    if (!CategoryId || !startDate || !endDate) {
+    if (!CompanyId || !CategoryId || !startDate || !endDate) {
       throw new Error('Invalid request parameters');
     }
 
@@ -24,6 +24,7 @@ export const getStatisticsByDemographic: RequestHandler = async (req, res) => {
       endDate as string,
       CategoryId as string,
       ServiceId as string,
+      CompanyId as string,
     );
 
     return res.status(200).json({ statistics });
