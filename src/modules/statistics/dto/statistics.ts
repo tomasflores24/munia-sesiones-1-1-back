@@ -1,5 +1,5 @@
 import { IsInt } from 'class-validator';
-import { Available, User, User_type } from '../../../models';
+import { Available, Rating, User, User_type } from '../../../models';
 
 export class SearchStatisticsDTO extends User {
   @IsInt()
@@ -19,5 +19,26 @@ export class demographicsDTO extends Available {
       age?: number;
     };
   };
+}
+
+export class serviceDTO extends Available {
+  Appointment?: {
+    Service?: {
+      name?: string;
+      Category?: {
+        name?: string;
+      };
+    };
+    Collaborator?: {
+      Gender?: {
+        name?: string;
+      };
+      age?: number;
+    };
+  };
+}
+
+export class generalDTO extends User {
+  Ratings?: Rating[];
 }
 
