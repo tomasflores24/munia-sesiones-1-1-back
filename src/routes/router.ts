@@ -6,10 +6,11 @@ import authRouter from '../modules/auth/auth.router';
 import statisticsRouter from '../modules/statistics/statistics.router';
 import s3Router from '../modules/s3/s3.router';
 import ratingRouter from '../modules/ratings/ratings.router';
-import collaboratorRouter from '../modules/collaborator/collaborator.router';
 import loginRouter from '../modules/login/login.router';
 import { checkJwtLogin } from '../modules/login/middleware/verifyJwtLogin';
 import { validateTypeCredentials } from '../modules/login/middleware/validate';
+import companyRouter from '../modules/user/company/company.router';
+import collaboratorRouter from '../modules/user/collaborator/collaborator.router';
 
 
 const router = express.Router();
@@ -37,6 +38,9 @@ router.use('/rating', ratingRouter);
 
 // collaborator
 router.use('/collaborator', collaboratorRouter);
+
+// company
+router.use('/company', companyRouter);
 
 // Login
 router.use('/login', checkJwtLogin, validateTypeCredentials, loginRouter);

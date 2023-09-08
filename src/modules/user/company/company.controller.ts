@@ -1,12 +1,12 @@
 import { RequestHandler } from 'express';
-import { handleErrorResponse } from '../../common/errorResponse';
 import {
   deleteCompanyInDB,
   getAllCompaniesInDB,
   getCompanyByIdInDB,
   updateCompanyInDB,
 } from './company.service';
-import { deleteImage } from '../../common/deleteImage';
+import { handleErrorResponse } from '../../../common/errorResponse';
+import { deleteImage } from '../../../common/deleteImage';
 
 const getAllCompany: RequestHandler = async (_req, res) => {
   try {

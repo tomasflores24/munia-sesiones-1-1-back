@@ -10,7 +10,7 @@ import {
   validateCollaboratorId,
   validateCollaboratorUpdate,
 } from './middleware/validation';
-import { upload } from '../../config/multer.config';
+import { upload } from '../../../config/multer.config';
 
 const collaboratorRouter = Router();
 

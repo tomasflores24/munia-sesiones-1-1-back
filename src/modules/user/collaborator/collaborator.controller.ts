@@ -1,12 +1,12 @@
 import { RequestHandler } from 'express';
-import { handleErrorResponse } from '../../common/errorResponse';
 import {
   deleteCollaboratorInDB,
   getAllCollaboratorInDB,
   getCollaboratorByIdInDB,
   updateCollaboratorInDB,
 } from './collaborator.service';
-import { deleteImage } from '../../common/deleteImage';
+import { handleErrorResponse } from '../../../common/errorResponse';
+import { deleteImage } from '../../../common/deleteImage';
 
 const getAllCollaborator: RequestHandler = async (_req, res) => {
   try {

@@ -1,11 +1,11 @@
 import { FindOptions } from 'sequelize';
-import { handleError } from '../../common/errorResponse';
-import { Collaborator, User } from '../../models';
-import { CreateUserDTO, UpdateUserDTO } from '../user/dto/user';
-import { updateUserInDB } from '../user/user.service';
+import { Collaborator, User } from '../../../models';
+import { handleError } from '../../../common/errorResponse';
 import { UpdateCollaboratorDTO } from './dto';
-import { uploadFileS3 } from '../s3/s3.service';
-import { s3Options } from '../../config/s3.config';
+import { UpdateUserDTO } from '../dto/user';
+import { uploadFileS3 } from '../../s3/s3.service';
+import { s3Options } from '../../../config/s3.config';
+import { updateUserInDB } from '../user.service';
 
 export const getAllCollaboratorInDB = () => {
   try {

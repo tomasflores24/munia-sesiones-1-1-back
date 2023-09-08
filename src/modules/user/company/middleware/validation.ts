@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import { validateAndCreate } from '../../../common/validateInstance';
 import { GetByIdCompanyDTO, UpdateCompanyDTO, deleteCompanyDTO } from '../dto';
-import { handleErrorResponse } from '../../../common/errorResponse';
-import { UpdateUserDTO } from '../../user/dto/user';
+import { validateAndCreate } from '../../../../common/validateInstance';
+import { handleErrorResponse } from '../../../../common/errorResponse';
+import { UpdateUserDTO } from '../../dto/user';
 
 export const validateCompanyId: RequestHandler = async (req, res, next) => {
   try {
