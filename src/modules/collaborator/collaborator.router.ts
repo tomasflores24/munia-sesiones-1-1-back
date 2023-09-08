@@ -2,7 +2,6 @@ import { Router } from 'express';
 import {
   getAllCollaborator,
   getCollaboratorById,
-  createCollaborator,
   updateCollaborator,
   deleteCollaborator,
 } from './collaborator.controller';
@@ -11,16 +10,16 @@ import {
   validateCollaboratorId,
   validateCollaboratorUpdate,
 } from './middleware/validation';
+import { upload } from '../../config/multer.config';
 
 const collaboratorRouter = Router();
 
 collaboratorRouter.get('/', getAllCollaborator);
 collaboratorRouter.get('/:id', validateCollaboratorId, getCollaboratorById);
 
-collaboratorRouter.post('/', createCollaborator);
-
 collaboratorRouter.put(
   '/update/:id',
+  upload.single('file'),
   validateCollaboratorUpdate,
   updateCollaborator
 );

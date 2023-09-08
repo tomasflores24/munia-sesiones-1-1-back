@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class GetByIdCollaboratorDTO {
   @IsNotEmpty()
@@ -15,19 +15,19 @@ export class UpdateCollaboratorDTO {
   @IsUUID('4')
   UserId!: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  last_name!: string;
+  last_name?: string;
 
+  @IsOptional()
   @IsInt()
-  @IsNotEmpty()
-  genderId!: number;
+  genderId?: number;
 
   //   @IsUUID('4')
   //   @IsNotEmpty()
   //   CompanyId!:string
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsInt()
   age!: number;
 }
@@ -36,8 +36,4 @@ export class deleteCollaboratorDTO {
   @IsNotEmpty()
   @IsUUID('4')
   id!: string;
-
-  @IsNotEmpty()
-  @IsUUID('4')
-  UserId!: string;
 }

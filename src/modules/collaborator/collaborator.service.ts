@@ -1,9 +1,11 @@
 import { FindOptions } from 'sequelize';
 import { handleError } from '../../common/errorResponse';
 import { Collaborator, User } from '../../models';
-import { CreateUserDTO } from '../user/dto/user';
+import { CreateUserDTO, UpdateUserDTO } from '../user/dto/user';
 import { updateUserInDB } from '../user/user.service';
 import { UpdateCollaboratorDTO } from './dto';
+import { uploadFileS3 } from '../s3/s3.service';
+import { s3Options } from '../../config/s3.config';
 
 export const getAllCollaboratorInDB = () => {
   try {
@@ -34,12 +36,20 @@ export const getCollaboratorByIdInDB = async (id: string) => {
 
 export const updateCollaboratorInDB = async (
   collaboratorData: UpdateCollaboratorDTO,
-  profileData: CreateUserDTO
+  profileData: UpdateUserDTO
 ) => {
   try {
     const collaborator = await Collaborator.findByPk(collaboratorData.id);
 
     if (!collaborator) throw new Error('Collaborator not found');
+    if (profileData.file) {
+      await uploadFileS3(
+        profileData.file.filename,
+        s3Options.bucket as string,
+        collaboratorData.UserId,
+        'profile'
+      );
+    }
     await updateUserInDB(collaboratorData.UserId, profileData);
     await collaborator.update(collaboratorData);
     return `Collaborator ${collaboratorData.id} updated`;
@@ -48,16 +58,15 @@ export const updateCollaboratorInDB = async (
   }
 };
 
-export const deleteCollaboratorInDB = async (collaboratorData: any) => {
+export const deleteCollaboratorInDB = async (id: string) => {
   try {
     const deleteUser = { isDelete: true };
 
-    const collaborator = await Collaborator.findByPk(collaboratorData.id);
+    const collaborator: any = await Collaborator.findByPk(id);
     if (!collaborator) throw new Error('Collaborator not found');
 
-    await updateUserInDB(collaboratorData.UserId, deleteUser as any);
-    await collaborator.update(collaboratorData);
-    return `Collaborator ${collaboratorData.id} deleted`;
+    await updateUserInDB(collaborator.UserId, deleteUser as any);
+    return `Collaborator ${id} deleted`;
   } catch (error) {
     return handleError(error, 'Error deleted user');
   }
