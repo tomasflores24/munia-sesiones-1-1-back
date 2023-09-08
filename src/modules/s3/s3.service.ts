@@ -2,6 +2,7 @@ import {
   GetObjectCommand,
   ListObjectsCommand,
   PutObjectCommand,
+  PutObjectCommandInput,
 } from '@aws-sdk/client-s3';
 import { client, s3Options } from '../../config/s3.config';
 import { updateUserInDB } from '../user/user.service';
@@ -27,20 +28,21 @@ const uploadFileS3: UploadFileS3 = async (filename, bucketName, userId, folder) 
     const user = await User.findByPk(userId);
     if (!user) throw new Error('User not found');
 
-    // TODO => Key De prueba<
     const key = folder + '/' + userId + '/' + filename;
-    // const key = folder + '/' + filename;
     const path = DIRECTORY_UPLOADS + '/' + filename;
 
-    const uploadParams = {
+    const uploadParams: PutObjectCommandInput = {
       Bucket: bucketName,
       Key: key,
       Body: path,
+      ACL: 'public-read',
+      // ContentType: `image/${filename.split('.')[1]}`,
+      ContentDisposition: 'inline',
     };
     const command = new PutObjectCommand(uploadParams);
     await client.send(command);
 
-    const url = `https://${bucketName}.s3.amazonaws.com/${folder}/${filename}`;
+    const url = `https://${bucketName}.s3.amazonaws.com/${folder}/${userId}/${filename}`;
 
     const newDataUser = { profilePic: url };
 

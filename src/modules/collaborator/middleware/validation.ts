@@ -19,9 +19,14 @@ export const validateCollaboratorId: RequestHandler = async (req, res, next) => 
 
 export const validateCollaboratorUpdate: RequestHandler = async (req, res, next) => {
   try {
-    const collaborator = { ...req.body.collaborator, ...req.params };
-    await validateAndCreate(collaborator, UpdateCollaboratorDTO);
-    await validateAndCreate(req.body.user, UpdateUserDTO);
+    const userData = JSON.parse(req.body.user);
+    const collaboratorData = JSON.parse(req.body.collaborator);
+    const { id } = req.params;
+    const file = req.file;
+
+    await validateAndCreate({ ...collaboratorData, id }, UpdateCollaboratorDTO);
+    await validateAndCreate({ ...userData, file }, UpdateUserDTO);
+
     next();
   } catch (error) {
     handleErrorResponse(res, error);
@@ -30,7 +35,7 @@ export const validateCollaboratorUpdate: RequestHandler = async (req, res, next)
 
 export const validateCollaboratorDelete: RequestHandler = async (req, res, next) => {
   try {
-    const collaborator = { ...req.body.collaborator, ...req.params };
+    const collaborator = req.params;
     await validateAndCreate(collaborator, deleteCollaboratorDTO);
     next();
   } catch (error) {

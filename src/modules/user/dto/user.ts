@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsString, IsEmail, IsBoolean, IsInt } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsEmail,
+  IsBoolean,
+  IsInt,
+  IsOptional,
+  IsUUID,
+} from 'class-validator';
 
 class BaseUserDTO {
   @IsNotEmpty()
@@ -36,26 +44,30 @@ class BaseUserDTO {
 export class CreateUserDTO extends BaseUserDTO {}
 
 export class UpdateUserDTO {
-  @IsNotEmpty()
-  @IsString()
-  name!: string;
+  @IsOptional()
+  @IsUUID('4')
+  id?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
   @IsString()
   @IsEmail()
-  email!: string;
+  email?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  password!: string;
+  password?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsInt()
-  CountryId!: number;
+  CountryId?: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  city!: string;
+  city?: string;
 
   // @IsBoolean()
   // isActive!: boolean;
@@ -66,4 +78,7 @@ export class UpdateUserDTO {
   // @IsNotEmpty()
   // @IsInt()
   // UserTypeId!: number;
+
+  @IsOptional()
+  file?: any;
 }

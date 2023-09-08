@@ -6,6 +6,7 @@ import {
   getCollaboratorByIdInDB,
   updateCollaboratorInDB,
 } from './collaborator.service';
+import { deleteImage } from '../../common/deleteImage';
 
 const getAllCollaborator: RequestHandler = async (_req, res) => {
   try {
@@ -25,33 +26,29 @@ const getCollaboratorById: RequestHandler = async (req, res) => {
   }
 };
 
-const createCollaborator: RequestHandler = (_req, res) => {
-  return res.json({ message: 'Collaborator create' });
-};
-
 const updateCollaborator: RequestHandler = async (req, res) => {
   try {
-    const collaboratorData = {
-      ...req.body.collaborator,
-      ...req.params,
-    };
-    const profileData = req.body.user;
+    const userData = JSON.parse(req.body.user);
+    const collaboratorData = JSON.parse(req.body.collaborator);
+    const { id } = req.params;
+    const file = req.file;
 
     const updateCollaborator = await updateCollaboratorInDB(
-      collaboratorData,
-      profileData
+      { ...collaboratorData, id },
+      { ...userData, file }
     );
 
     return res.json({ updateCollaborator });
   } catch (error) {
     handleErrorResponse(res, error);
+  } finally {
+    deleteImage(req.file);
   }
 };
 
 const deleteCollaborator: RequestHandler = async (req, res) => {
   try {
-    const collaboratorData = { ...req.body.collaborator, ...req.params };
-    const deletedCollaborator = await deleteCollaboratorInDB(collaboratorData);
+    const deletedCollaborator = await deleteCollaboratorInDB(req.params.id);
 
     return res.json({ deletedCollaborator });
   } catch (error) {
@@ -62,7 +59,6 @@ const deleteCollaborator: RequestHandler = async (req, res) => {
 export {
   getAllCollaborator,
   getCollaboratorById,
-  createCollaborator,
   updateCollaborator,
   deleteCollaborator,
 };

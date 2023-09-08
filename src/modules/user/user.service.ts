@@ -1,7 +1,7 @@
 import { hash } from 'argon2';
 import { Country, User, User_type } from '../../models';
 import { checkEmailExists } from '../auth/utils/verify.utils';
-import { CreateUserDTO } from './dto/user';
+import { CreateUserDTO, UpdateUserDTO } from './dto/user';
 import { handleError } from '../../common/errorResponse';
 
 const createUserInDB = async (userData: CreateUserDTO) => {
@@ -17,7 +17,7 @@ const createUserInDB = async (userData: CreateUserDTO) => {
   }
 };
 
-const updateUserInDB = async (userId: string, userData: CreateUserDTO) => {
+const updateUserInDB = async (userId: string, userData: UpdateUserDTO) => {
   try {
     const user = await User.findByPk(userId);
 
