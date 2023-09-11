@@ -10,7 +10,11 @@ import { updateUserInDB } from '../user.service';
 export const getAllCompaniesInDB = () => {
   try {
     const findOptionsAll: FindOptions = {
-      include: { model: User, attributes: { exclude: ['updatedAt', 'createdAt'] } },
+      include: {
+        model: User,
+        attributes: { exclude: ['updatedAt', 'createdAt'] },
+        where: { isActive: true, isDelete: false },
+      },
       attributes: { exclude: ['UserId', 'CompanyId'] },
     };
     const allCompanies = Company.findAll(findOptionsAll);
@@ -23,7 +27,10 @@ export const getAllCompaniesInDB = () => {
 export const getCompanyByIdInDB = async (id: string) => {
   try {
     const findOptionsById: FindOptions = {
-      include: { model: User, attributes: { exclude: ['updatedAt', 'createdAt'] } },
+      include: {
+        model: User,
+        attributes: { exclude: ['updatedAt', 'createdAt', 'password'] },
+      },
       attributes: { exclude: ['updatedAt', 'createdAt'] },
     };
     const company = await Company.findByPk(id, findOptionsById);

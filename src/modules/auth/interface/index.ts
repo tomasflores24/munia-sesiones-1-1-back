@@ -14,6 +14,6 @@ type AuthInDBF = (
   profileData: AuthCompanyDTO | AuthProviderDTO | AuthCollaboratorDTO,
   userData: CreateUserDTO,
   type: Type
-) => Promise<{ email: string; UserId: string }>;
+) => Promise<any>;
 
 export { AuthInDBF, TypesAuth };
