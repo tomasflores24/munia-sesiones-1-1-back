@@ -9,9 +9,10 @@ const jwtOptions = {
   secretOrKey: JWT_SECRET_KEY,
 };
 
-const strategyValidation = new JwtStrategy(jwtOptions, (jwt_payload, done) => {
-  const hasUser = jwt_payload.email && jwt_payload.UserId ? jwt_payload : false;
-  done(null, hasUser, { status: 401, message: 'Unauthorized' });
+const strategyValidation = new JwtStrategy(jwtOptions, (_jwt_payload, done) => {
+  // const hasUser = jwt_payload.email && jwt_payload.UserId ? jwt_payload : false;
+  // done(null, hasUser, { status: 401, message: 'Unauthorized' });
+  done(null, true);
 });
 
 export { jwtOptions, strategyValidation };

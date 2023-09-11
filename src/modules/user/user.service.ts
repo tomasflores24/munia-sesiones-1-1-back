@@ -42,4 +42,15 @@ const deleteUserInDB = async (userId: string) => {
   }
 };
 
-export { createUserInDB, updateUserInDB, deleteUserInDB };
+const activeUserInDB = async (userId: string) => {
+  try {
+    const activeUser = { isActive: true };
+    const user = await User.findByPk(userId);
+    if (!user) throw new Error('User not found');
+    await user.update(activeUser);
+  } catch (error) {
+    return handleError(error, 'Error updating');
+  }
+};
+
+export { createUserInDB, updateUserInDB, deleteUserInDB, activeUserInDB };

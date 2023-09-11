@@ -10,7 +10,14 @@ import { updateUserInDB } from '../user.service';
 export const getAllCollaboratorInDB = () => {
   try {
     const findOptionsAll: FindOptions = {
-      include: { model: User, attributes: { exclude: ['updatedAt', 'createdAt'] } },
+      include: {
+        model: User,
+        attributes: { exclude: ['updatedAt', 'createdAt'] },
+        where: {
+          isActive: true,
+          isDelete: false,
+        },
+      },
       attributes: { exclude: ['UserId', 'CompanyId'] },
     };
     const allCollaborators = Collaborator.findAll(findOptionsAll);
@@ -23,7 +30,10 @@ export const getAllCollaboratorInDB = () => {
 export const getCollaboratorByIdInDB = async (id: string) => {
   try {
     const findOptionsById: FindOptions = {
-      include: { model: User, attributes: { exclude: ['updatedAt', 'createdAt'] } },
+      include: {
+        model: User,
+        attributes: { exclude: ['updatedAt', 'createdAt', 'password'] },
+      },
       attributes: { exclude: ['updatedAt', 'createdAt'] },
     };
     const collaborator = await Collaborator.findByPk(id, findOptionsById);
