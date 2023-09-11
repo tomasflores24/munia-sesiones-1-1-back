@@ -5,7 +5,6 @@ import { UpdateUserDTO } from '../dto/user';
 import { uploadFileS3 } from '../../s3/s3.service';
 import { s3Options } from '../../../config/s3.config';
 import { updateUserInDB } from '../user.service';
-import { UpdateProviderDTO } from './dto';
 
 export const getAllProviderInDB = () => {
   try {
@@ -35,7 +34,7 @@ export const getProviderByIdInDB = async (id: string) => {
 };
 
 export const updateProviderInDB = async (
-  providerData: UpdateProviderDTO,
+  providerData: any,
   profileData: UpdateUserDTO
 ) => {
   try {

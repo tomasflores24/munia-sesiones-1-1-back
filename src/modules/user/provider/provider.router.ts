@@ -5,24 +5,14 @@ import {
   getProviderById,
   updateProvider,
 } from './provider.controller';
-import {
-  validateProviderDelete,
-  validateProviderId,
-  validateProviderUpdate,
-} from './middleware/validation';
 import { upload } from '../../../config/multer.config';
 
 const providerRouter = Router();
 
 providerRouter.get('/', getAllProvider);
-providerRouter.get('/:id', validateProviderId, getProviderById);
+providerRouter.get('/:id', getProviderById);
 
-providerRouter.put(
-  '/update/:id',
-  upload.single('file'),
-  validateProviderUpdate,
-  updateProvider
-);
-providerRouter.put('/delete/:id', validateProviderDelete, deleteProvider);
+providerRouter.put('/update/:id', upload.single('file'), updateProvider);
+providerRouter.put('/delete/:id', deleteProvider);
 
 export default providerRouter;
