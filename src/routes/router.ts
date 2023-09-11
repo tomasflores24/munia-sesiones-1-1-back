@@ -11,6 +11,8 @@ import { checkJwtLogin } from '../modules/login/middleware/verifyJwtLogin';
 import { validateTypeCredentials } from '../modules/login/middleware/validate';
 import companyRouter from '../modules/user/company/company.router';
 import collaboratorRouter from '../modules/user/collaborator/collaborator.router';
+import serviceRouter from '../modules/service/service.router';
+import categoryRouter from '../modules/category/category.router';
 
 
 const router = express.Router();
@@ -29,6 +31,12 @@ router.use('/countries', countriesRouter);
 
 //Statistics
 router.use('/statistics', statisticsRouter);
+
+//Service
+router.use('/service', serviceRouter);
+
+//Category
+router.use('/category', categoryRouter);
 
 // s3
 router.use('/s3', s3Router);
