@@ -13,7 +13,7 @@ import companyRouter from '../modules/user/company/company.router';
 import collaboratorRouter from '../modules/user/collaborator/collaborator.router';
 import serviceRouter from '../modules/service/service.router';
 import categoryRouter from '../modules/category/category.router';
-
+import providerRouter from '../modules/user/provider/provider.router';
 
 const router = express.Router();
 
@@ -49,6 +49,9 @@ router.use('/collaborator', collaboratorRouter);
 
 // company
 router.use('/company', companyRouter);
+
+// provider
+router.use('/provider', providerRouter);
 
 // Login
 router.use('/login', checkJwtLogin, validateTypeCredentials, loginRouter);
